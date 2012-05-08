@@ -24,7 +24,7 @@ public class TestMobipei extends TestCase {
       Mobipei.setPayment(10.25);
 	}
 	catch (Exception e) {
-	  fail("Fail when setting a Payment.".concat(e.getLocalizedMessage()));
+	  fail("Fail when setting a Payment");
     }
   }
 }

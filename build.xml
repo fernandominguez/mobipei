@@ -34,7 +34,7 @@
   </target>
 
   <target name="test" depends="compile-test">
-    <junit failureProperty="test.failure" >
+    <junit failureProperty="test.failure">
       <classpath refid="classpath.java"/>
       <classpath refid="classpath.test"/>
 
@@ -44,10 +44,14 @@
       </batchtest>
     </junit>
 
-  	<fail message="test failed" if="test.failure" />
+  	<fail message="test failed" if="test.failure"/>
   </target>
 
-  <target name="all" depends="test"/>
+  <target name="javadoc" unless="test.failure">
+    <javadoc access="public" author="true" classpath="/home/fernando/Java/apache-tomcat-7.0.27/lib/tomcat-dbcp.jar:/home/fernando/Java/apache-tomcat-7.0.27/lib/tomcat-api.jar:/home/fernando/Java/apache-tomcat-7.0.27/lib/el-api.jar:/home/fernando/Java/apache-tomcat-7.0.27/lib/servlet-api.jar:/home/fernando/Java/apache-tomcat-7.0.27/lib/jsp-api.jar:/home/fernando/Java/apache-tomcat-7.0.27/lib/tomcat-util.jar:web/WEB-INF/classes/java:/home/fernando/Java/apache-tomcat-7.0.27/lib/tomcat-i18n-es.jar:/home/fernando/Java/apache-tomcat-7.0.27/lib/tomcat-jdbc.jar:/home/fernando/Java/apache-tomcat-7.0.27/lib/tomcat-i18n-fr.jar:/home/fernando/Java/apache-tomcat-7.0.27/lib/jasper-el.jar:/home/fernando/Java/apache-tomcat-7.0.27/lib/catalina.jar:/home/fernando/Java/apache-tomcat-7.0.27/lib/catalina-ha.jar:/home/fernando/Java/eclipse/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar:/home/fernando/Java/apache-tomcat-7.0.27/lib/catalina-tribes.jar:web/WEB-INF/classes/test:/home/fernando/Java/eclipse/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar:/home/fernando/Java/apache-tomcat-7.0.27/lib/ecj-3.7.2.jar:/home/fernando/Java/apache-tomcat-7.0.27/lib/tomcat-i18n-ja.jar:/home/fernando/Java/apache-tomcat-7.0.27/lib/catalina-ant.jar:/home/fernando/Java/apache-tomcat-7.0.27/lib/jasper.jar:/home/fernando/Java/apache-tomcat-7.0.27/lib/tomcat-coyote.jar:/home/fernando/Java/apache-tomcat-7.0.27/lib/annotations-api.jar" destdir="web/WEB-INF/doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="com.mobipei.core" source="1.7" sourcepath="java:test" splitindex="true" use="true" version="true"/>
+  </target>
+
+  <target name="all" depends="test, javadoc"/>
 
   <target name="clean" depends="clean-compile-test"/>
 </project>
