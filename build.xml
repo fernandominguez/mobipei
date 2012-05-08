@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="all">
+  <property file="ant.project.properties"/>
+  <property name="java-dir" location="java"/>
+  <property name="test-dir" location="test"/>
+  <property name="TALK" value="false"/>
+  <property name="classes.dir.java" value="web/WEB-INF/classes/java"/>
+  <property name="classes.dir.test" value="web/WEB-INF/classes/test"/>
+  <property name="junit.jar.dir" value="../../eclipse/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar"/>
+
+  <path id="classpath.test">
+    <pathelement location="${junit.jar.dir}"/>
+    <pathelement location="${classes.dir.test}"/>
+  </path>
+
+  <path id="classpath.java">
+    <pathelement location="${junit.jar.dir}"/>
+    <pathelement location="${classes.dir.java}"/>
+  </path>
+
+  <target name="compile-test">
+    <javac srcdir="${java-dir}" destdir="${classes.dir.java}" verbose="${TALK}" debug="true" includeantruntime="false">
+      <classpath refid="classpath.java"/>
+    </javac>
+    <javac srcdir="${test-dir}" destdir="${classes.dir.test}" verbose="${TALK}" debug="true" includeantruntime="false">
+      <classpath refid="classpath.test"/>
+    </javac>
+  </target>
+
+	<target name="clean-compile-test">
+    <delete verbose="${TALK}">
+      <fileset dir="${test-dir}" includes="**/*.class"/>
+    </delete>
+  </target>
+
+  <target name="test" depends="compile-test">
+    <junit failureProperty="test.failure" >
+      <classpath refid="classpath.java"/>
+      <classpath refid="classpath.test"/>
+
+      <formatter type="brief" usefile="false"/>
+      <batchtest>
+        <fileset dir="${classes.dir.test}" includes="**/Test*.class"/>
+      </batchtest>
+    </junit>
+
+  	<fail message="test failed" if="test.failure" />
+  </target>
+
+  <target name="all" depends="test"/>
+
+  <target name="clean" depends="clean-compile-test"/>
+</project>
